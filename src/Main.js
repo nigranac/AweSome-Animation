@@ -42,7 +42,36 @@ const Main = () => {
   return (
     <View style={{flex: 1, backgroundColor: '#000'}}>
       <StatusBar hidden />
-      
+      <View 
+      style={StyleSheet.absoluteFillObject}
+      >
+        {data.map((image, index) => {
+          
+          const inputRange = [
+            (index - 1) * width,
+            index * width,
+            (index + 1) * width,
+          ];
+          const opacity = scrollX.interpolate({
+            inputRange,
+            outputRange: [0, 1, 1],
+          });
+          
+          return (
+            <Animated.Image
+              key={`image-${index}`}
+              source={{uri: image}}
+              style={[
+                StyleSheet.absoluteFillObject,
+                {
+                  opacity,
+                },
+              ]}
+              blurRadius={50}
+            />
+          );
+        })}
+      </View>
       <Animated.FlatList
         data={data}
         onScroll={Animated.event(
